@@ -7,6 +7,7 @@ interface ITodoList {
 }
 
 const TodoList: React.FC<ITodoList> = ({todos}) => {
+  
   return (
     <Grid
     container
@@ -30,7 +31,10 @@ const TodoList: React.FC<ITodoList> = ({todos}) => {
         borderRadius: "0.5rem",
       }}
     >
-        <Typography>InProgress Todos</Typography>
+        <Typography className='title' color="secondary" align="center" variant='h4' >InProgress Todos</Typography>
+        {
+          
+        }
     </Grid>
     </Grid>
   )
