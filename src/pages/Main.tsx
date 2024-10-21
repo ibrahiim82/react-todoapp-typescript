@@ -15,50 +15,58 @@ import TodoList from "../components/TodoList";
 const url = "https://634ac3fc5df952851418480f.mockapi.io/api/todos";
 
 const Main = () => {
-//   const [todos, setTodos] = useState([] as ITodoType[]);
-//   const [todos, setTodos] = useState<Array<ITodoType>> ([]);
-  const [todos, setTodos] = useState<ITodoType[]> ([]); //* yaygın olan kullanım
-  console.log(todos)
+  //   const [todos, setTodos] = useState([] as ITodoType[]);
+  //   const [todos, setTodos] = useState<Array<ITodoType>> ([]);
+  const [todos, setTodos] = useState<ITodoType[]>([]); //* yaygın olan kullanım
+  console.log(todos);
 
-  const getTodos = async()=>{
+  const getTodos = async () => {
     try {
-        const {data} = await axios(url)
-        // const {data} = await axios<ITodoType[]>(url)
-        setTodos(data)
+      const { data } = await axios(url);
+      // const {data} = await axios<ITodoType[]>(url)
+      setTodos(data);
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   //* 1. yol
-//   const addTodo = async(task:string)=>{
-//     try {
-//         await axios.post(url,{task,isDone:false})
-//     } catch (error) {
-//         console.log(error)
-//     }
-//   }
+  //   const addTodo = async(task:string)=>{
+  //     try {
+  //         await axios.post(url,{task,isDone:false})
+  //     } catch (error) {
+  //         console.log(error)
+  //     }
+  //   }
 
-//* 2.yol
-type AddFn= (task:string) => Promise<void>
-  const addTodo:AddFn = async(task:string)=>{
+  //* 2.yol
+  // type AddFn= (task:string) => Promise<void>
+  const addTodo: AddFn = async (task) => {
     try {
-        await axios.post(url,{task,isDone:false})
-        getTodos()
+      await axios.post(url, { task, isDone: false });
+      getTodos();
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-  }
+  };
+  const toggleTodo: ToggleFn = async (todo) => {
+    try {
+      await axios.post(`${url}/${todo.id}`, { ...todo, isDone: !todo.isDone });
+      getTodos();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    getTodos()
-  }, [])
-  
+    getTodos();
+  }, []);
+
   return (
     <Container>
       <Header />
       <AddTodo addTodo={addTodo} />
-      <TodoList todos={todos} />
+      <TodoList todos={todos} toggleTodo={toggleTodo} />
     </Container>
   );
 };

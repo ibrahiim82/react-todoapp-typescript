@@ -3,10 +3,11 @@ import { IconButton, ListItem, ListItemText } from '@mui/material'
 import React, { FC } from 'react'
 
 interface ITodoItem {
-    todo: ITodoType
+    todo: ITodoType;
+    toggleTodo: ToggleFn;
 }
 
-const TodoItem: FC<ITodoItem> = ({todo}) => {
+const TodoItem: FC<ITodoItem> = ({todo,toggleTodo}) => {
   return (
     <ListItem
     disableGutters
@@ -17,7 +18,7 @@ const TodoItem: FC<ITodoItem> = ({todo}) => {
       </IconButton>
     }
   >
-    <ListItemText primary={todo.task} />
+    <ListItemText primary={todo.task} onClick={()=>toggleTodo(todo)} />
   </ListItem>
   )
 }
