@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import AddTodo from "../components/AddTodo";
 import axios from "axios";
 import TodoList from "../components/TodoList";
+import { notify, SweetIcon } from "../helper/sweetAlert";
 
 // interface ITodoType {
 //     task:string;
@@ -44,25 +45,31 @@ const Main = () => {
   const addTodo: AddFn = async (task) => {
     try {
       await axios.post(url, { task, isDone: false });
+      notify("Todo created", SweetIcon.SUCCESS)
       getTodos();
     } catch (error) {
       console.log(error);
+      notify("Todo not created!", SweetIcon.ERROR)
     }
   };
   const toggleTodo: ToggleFn = async (todo) => {
     try {
-      await axios.put(`${url}/${todo.id}`, { ...todo, isDone: !todo.isDone });
+      await axios.put(`${url}/${todo.id}`, { ...todo, isDone:!todo.isDone });
+      notify("Todo updated", SweetIcon.SUCCESS)
       getTodos();
     } catch (error) {
       console.log(error);
+      notify("Todo not updated!", SweetIcon.ERROR)
     }
   };
   const deleteTodo: DeleteFn = async (id) => {
     try {
       await axios.delete(`${url}/${id}`);
+      notify("Todo deleted", SweetIcon.SUCCESS)
       getTodos();
     } catch (error) {
       console.log(error);
+      notify("Todo not deleted!", SweetIcon.ERROR)
     }
   };
 

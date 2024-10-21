@@ -7,4 +7,4 @@ interface ITodoType {
 
 type AddFn = (task: string) => Promise<void>;
 type ToggleFn = (todo: ITodoType) => Promise<void>;
-type DeleteFn = (todo: string | number) => Promise<void>;
+type DeleteFn = (id: string | number) => Promise<void>;
